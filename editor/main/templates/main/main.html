@@ -1,0 +1,50 @@
+{% extends "main/base.html"%}
+{% block content%}
+{% load crispy_forms_tags %}  
+<div class="container">
+
+    <!--Django Form-->
+    <h2 class="my-4">Add a new Images</h2>
+    <form method="post" enctype="multipart/form-data">  
+        {% csrf_token %}  
+        {{ form|crispy }}  
+        <button class="btn btn-secondary my-4" type="submit">Upload</button> 
+    </form>
+    <hr>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Image-1</th>
+            <th scope="col">Image-2</th>
+            <th scope="col">Image-3</th>
+            <th scope="col">Image-4</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            {% for d in data %}
+            <td>{{d.img1.url}}</td>
+            <td>{{d.img2.url}}</td>
+            <td>{{d.img3.url}}</td>
+            {% empty %}
+                    <h3>No Data aviable</h3>
+            {% endfor %}
+          </tr>
+          
+        </tbody>
+      </table>
+</div>
+{% endblock %}
+<div class="mb-3">
+    <label for="formFile1" class="form-label">Choose Image 1</label>
+    <input class="form-control" type="file" id="formFile1" accept=".jpg, .jpeg, .png">
+</div>
+<div class="mb-3">
+    <label for="formFile2" class="form-label">Choose Image 2</label>
+    <input class="form-control" type="file" id="formFile2" accept=".jpg, .jpeg, .png">
+</div>
+<div class="mb-3">
+    <label for="formFile3" class="form-label">Choose Image 3</label>
+    <input class="form-control" type="file" id="formFile3" accept=".jpg, .jpeg, .png">
+</div>

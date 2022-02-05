@@ -1,0 +1,97 @@
+{% extends "main/base.html"%}
+{% block content%}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-header">
+                    Photo Competitor:
+                </div>
+                <ul class="list-group list-group-flush list-group-item">
+                    {% for ph in photo %}
+                    <p>{{ph.cname}}</p>
+                    {% endfor %}
+                </ul>
+                
+                <ul class="list-group list-group-flush">
+                    {% for ph in photo %}
+                    <a href="{{ph.image.url}}" download class="btn btn-dark btn-block btn-sm m-1">Download</a>
+                    {% endfor %}
+                    <a href="{% url 'main:editor' mid cid%}"  class="btn btn-dark btn-block btn-sm m-1">Go Back to editor</a>
+                </ul>
+            </div>
+
+        </div>
+        <div class="col-md-9">
+            <div class="row">
+                <div class="form-group">
+                    <div id="image-box" class="image-container">
+                        <div style="height: 90vh;">
+                            {% for ph in photo %}
+                            <img id="image" style="max-width: 100%; max-height: 100%;" src="{{ph.image.url}}">
+                            {% endfor %}
+                        </div>  
+                    </div>
+                    <button class="btn btn-outline-info" id="confirm-btn" style="width: 100%; margin-top: 10px;" type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+<script type="module">
+// import Cropper from 'cropperjs';
+const confirmEle = document.getElementById('confirm-btn')
+document.getElementById('confirm-btn').style.display = 'block'
+const image = document.getElementById('image');
+console.log(image);
+const cropper = new Cropper(image, {
+//   aspectRatio: 16 / 9,
+autoCropArea: 1,
+	  viewMode: 1,
+	  scalable: false,
+	  zoomable: false,
+	  movable: false,
+	  minCropBoxWidth: 200,
+	  minCropBoxHeight: 200,
+  crop(event) {
+    console.log(event.detail.x);
+    console.log(event.detail.y);
+    console.log(event.detail.width);
+    console.log(event.detail.height);
+    console.log(event.detail.rotate);
+    console.log(event.detail.scaleX);
+    console.log(event.detail.scaleY);
+  },
+});
+confirmEle.addEventListener('click', ()=>{
+	    // This method coverts the selected cropped image on the cropper canvas into a blob object
+	    cropper.getCroppedCanvas().toBlob((blob)=>{
+	      
+	      // Gets the original image data
+	      let fileInputElement = document.getElementById('image');
+	      // Make a new cropped image file using that blob object, image_data.name will make the new file name same as original image
+	      let file = new File([blob], {type:"image/*", lastModified:new Date().getTime()});
+        //   console.log(file);
+	      // Create a new container
+	      let container = new DataTransfer();
+	      // Add the cropped image file to the container
+        //   console.log("_-______________________________________________________-");
+	      container.items.add(file);
+        //   console.log(container);
+        console.log(container.items.length);
+        console.log(container.items[0].getAsFile())
+	      // Replace the original image file with the new cropped image file
+	    //   fileInputElement.files = container.files;
+        // //   console.log("_-______________________________________________________-");
+        //   console.log(fileInputElement);
+        // //   img_data.name,
+        console.log("Saved");
+        localStorage.setItem('croppedImage', file);
+	      });
+	    });
+</script>
+{% endblock %}
+
+<p id="urlqrl" style="display:none;">{{ph.image.url}}</p>
