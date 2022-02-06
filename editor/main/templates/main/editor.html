@@ -1,5 +1,6 @@
 {% extends "main/base.html"%}
 {% load static%}
+{% load crispy_forms_tags %}
 {% block content%}
 <style>
     * {
@@ -55,11 +56,19 @@
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js">
 </script>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    <strong>{{ message }}!</strong>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+{% endif %}
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <h6>Model Name: {{name}}</h6>
-            <h6>Category Name: {{cate}}</h6>
+            <h6>Model Name: <strong>{{name}}</strong></h6>
+            <h6>Category Name: <strong>{{cate}}</strong></h6>
             {% for ph in samsung %}
             <div class="col">
                 <div class="box" style="
@@ -151,13 +160,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form>
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="form-floating mb-3">
-                        <input class="form-control" placeholder="Name" id="name"></input>
+                        <input class="form-control" placeholder="Name" id="name" name="name"></input>
                         <label for="name">Name</label>
                     </div>
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+                        <textarea class="form-control" placeholder="Leave a comment here" id="comment" name="comment"
                             style="height: 100px"></textarea>
                         <label for="comment">Comments</label>
                     </div>
@@ -176,7 +186,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-
+                {% for c in cmmt %}
+                <strong>{{c.name}}</strong>
+                <p><em>{{c.comment}}</em></p>
+                <hr>
+                {% endfor %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
@@ -256,3 +270,10 @@
 {% endfor %}
 <button type="button" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Crop
 </button>
+
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+

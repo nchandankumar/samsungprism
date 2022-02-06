@@ -33,3 +33,13 @@ class Photocrop(models.Model):
     def __str__(self): 
         return self.id
 
+class Comments(models.Model):
+    mobile = models.ForeignKey( 
+        Mobile, on_delete=models.SET_NULL, null=True, blank=True) 
+    category = models.ForeignKey( 
+        Category, on_delete=models.SET_NULL, null=True, blank=True) 
+    name = models.CharField(max_length=100, null=False, blank=False)
+    comment = models.TextField(null=False,blank=False)
+    def __str__(self):
+        return self.name
+

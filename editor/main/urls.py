@@ -11,5 +11,5 @@ urlpatterns = [
     path('viewimage/<str:mid>/<str:cid>/',views.viewCategoryImage,name='viewimage'),
     path('editor/<str:mid>/<str:cid>/',views.editor,name='editor'),
     path('photocrop/<str:mid>/<str:cid>/',views.photocrop,name='photocrop'),
-    path('report/',views.report,name='report')
+    path('report/<str:mid>/',views.report,name='report')
 ]

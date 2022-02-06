@@ -1,32 +1,24 @@
 {% extends "main/base.html"%}
 {% load static%}
 {% block content%}
-<h1>Overview</h1>
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col">
-                <div class="box">
-                    <img style="width: 100%; height: 30rem;"  src="../../static/main/1.jpg">
-                </div>
-            </div>
-            <div class="col">
-                <div class="box">
-                    <img style="width: 100%; height: 30rem;"  src="../../static/main/2.jpg">
-                </div>
-            </div>
-            <div class="col">
-                <div class="box">
-                    <img style="width: 100%; height: 30rem;"  src="../../static/main/3.jpg">
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-</div>
-<h1>Cropped Images</h1>
-<h1>Reviews</h1>
-<a type="button" href=" {% url 'editor' %}" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-file-alt"></i> Report Description   </a>
-<button type="button" class="btn btn-outline-secondary mx-3 my-4">Download Report</button>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        {% for m in cname %}
+        <th scope="col">{{m}}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+        {% for c in cats %}
+      <tr>
+        
+        <th scope="row">{{c.name}}</th>
+        
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}
