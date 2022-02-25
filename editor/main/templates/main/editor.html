@@ -53,8 +53,25 @@
     .height-fix {
         height: 8vh;
     }
+    #myWindow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #999;
+}
+
+/* #myContent {
+    position: relative;
+    display: flex;
+    align-items: center;
+    transform: scale(1,1);
+} */
 </style>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js">
+</script>
+<script>
+    
 </script>
 {% if messages %}
 {% for message in messages %}
@@ -71,26 +88,26 @@
             <h6>Category Name: <strong>{{cate}}</strong></h6>
             {% for ph in samsung %}
             <div class="col">
-                <div class="box" style="
+                <div class="box" id="myWindow" style="
                 width: 300px;
                 height: 400px;
                 overflow: hidden;
                 border-style: solid;
             ">
-                    <img style="width: 100%;" name="geeks" GFG="250" src="{{ph.image.url}}">
+                    <img id="myContent" style="width: 100%;" name="geeks" GFG="250" src="{{ph.image.url}}">
                 </div>
                 <p>Competitor: <strong>{{ph.cname}}</strong></p>
             </div>
             {% endfor %}
             {% for photo in photos %}
             <div class="col">
-                <div class="box" style="
+                <div class="box" id="myWindow" style="
                 width: 300px;
                 height: 400px;
                 overflow: hidden;
                 border-style: solid;
             ">
-                    <img style="width: 100%;" name="geeks" GFG="250" src="{{photo.image.url}}">
+                    <img id="myContent" style="width: 100%;" name="geeks" GFG="250" src="{{photo.image.url}}">
                 </div>
                 <p>Competitor: <strong>{{photo.cname}}</strong></p>
             </div>
@@ -120,13 +137,13 @@
         </form>
     </div>
     <div class="col md-3">
-        <button type="button" class="btn btn-outline-secondary mx-3 my-4" onclick="zoomin()"><i
+        <button  type="button" class="btn btn-outline-secondary mx-3 my-4" onclick="zoomin()"><i
                 class="fas fa-search-plus"></i>
             Zoom-In
         </button>
     </div>
     <div class="col md-3">
-        <button type="button" class="btn btn-outline-secondary mx-3 my-4" onclick="zoomout()"><i
+        <button  type="button" class="btn btn-outline-secondary mx-3 my-4" onclick="zoomout()"><i
                 class="fas fa-search-minus"></i>
             Zoom-Out
         </button>
@@ -243,6 +260,30 @@
         };
     }
 </script>
+<script src="{% static 'main/vanilla-js-wheel-zoom/dist/wheel-zoom.min.js' %}">
+    console.log(1);
+</script>
+<script>
+    WZoom.create('myContent2');
+    // WZoom.create('myContent1');
+    /**
+ * Create WZoom instance
+ * @param {string|HTMLElement} selectorOrHTMLElement
+ * @param {Object} [options]
+ * @returns {WZoom}
+ */
+    const wzoom = WZoom.create('img');
+    document.querySelector('[data-zoom-up]').addEventListener('click', () => {
+    wzoom.zoomUp();
+});
+
+document.querySelector('[data-zoom-down]').addEventListener('click', () => {
+    wzoom.zoomDown();
+});
+
+    </script>
+   
+
 
 {% endblock %}
 

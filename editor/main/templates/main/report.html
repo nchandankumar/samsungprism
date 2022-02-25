@@ -1,24 +1,256 @@
 {% extends "main/base.html"%}
 {% load static%}
 {% block content%}
-<table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">#</th>
-        {% for m in cname %}
-        <th scope="col">{{m}}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-        {% for c in cats %}
-      <tr>
+<div id='center' class="main center">
         
-        <th scope="row">{{c.name}}</th>
-        
-        
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+  <div class="parent">
+      <div class="div1">
+      </div>
+      <div class="div2">
+          <div class="custom-select" style="width:200px;">
+              <select name="" id="">
+                  <option value="Preview">Preview</option>
+                  <option value="Specifications">Specifications</option>
+                  <option value="Image Set">Image Set</option>
+              </select>
+          </div>
+      </div>
+      <div class="div3">
+          <img class="phone_img" src="https://i01.appmifile.com/webfile/globalimg/Iris/redmi-10-black.png" alt="">
+      </div>
+      <div class="div4">
+          <div class="custom-select" style="width:200px;">
+              <select name="" id="">
+                  <option value="Preview">Preview</option>
+                  <option value="Specifications">Specifications</option>
+                  <option value="Image Set">Image Set</option>
+              </select>
+          </div>
+      </div>
+      <div class="div5">
+          <img class="phone_img" src="https://www.notebookcheck.net/fileadmin/Notebooks/Google/Pixel_5/4_zu_3_Teaser_Google_Pixel_5.jpg" alt="">
+
+      </div>
+      <div class="div6">
+          <div class="custom-select" style="width:200px;">
+              <select name="" id="">
+                  <option value="Preview">Preview</option>
+                  <option value="Specifications">Specifications</option>
+                  <option value="Image Set">Image Set</option>
+              </select>
+          </div>
+      </div>
+      <div class="div7">
+          <img class="phone_img" src="https://m.media-amazon.com/images/I/81vDZyJQ-4L._SY606_.jpg" alt="">
+
+      </div>
+      <!-- <div class="div8">
+          <table style="width:100%">
+              <tr>
+                <th>Specifications</th>
+                <th>Comments</th>
+              </tr>
+              <tr>
+                <td>HDR</td>
+                <td>
+                    Shade+ Building
+                    <br>
+                    Bright Light
+                    <br>
+                    Back Light
+                    <br>
+                    With Person
+                  </td>
+              </tr>
+              <tr>
+                  <td>BEAUTY</td>
+                  <td>
+                      Female
+                      <br>
+                      Male
+                  </td>
+              </tr>
+              <tr>
+                  <td>BOKEH</td>
+                  <td>
+                      Default
+                      <br>
+                      Max
+                  </td>
+              </tr>
+              <tr>
+                  <td>LOW LIGHT</td>
+                  <td>
+                      Flash ON
+                      <br>
+                      Flash OFF
+                  </td>
+              </tr>
+          </table>
+      </div> -->
+      <!-- <div class="div9">
+          <table style="width:100%">
+              <tr>
+                <th>Comments</th>
+              </tr>
+              <tr>
+                <td>Alfreds Futterkiste</td>
+              </tr>
+              <tr>
+                  <td>
+                      <a href="">Alfreds Futterkiste</a>
+                      <br>
+                      <a href="">Alfreds Futterkiste</a>
+                  </td>
+              </tr>
+              <tr>
+                  <td>Maria Anders</td>
+              </tr>
+          </table>
+      </div> -->
+  </div>
+  <div class="div8">
+      <table style="width:100%">
+          <tr>
+            <th width="25%">Specifications</th>
+            <th>Comments</th>
+          </tr>
+          <tr>
+            <td>HDR</td>
+            <td>
+                Shade+ Building
+                <br>
+                Bright Light
+                <br>
+                Back Light
+                <br>
+                With Person
+              </td>
+          </tr>
+          <tr>
+              <td>BEAUTY</td>
+              <td>
+                  Female
+                  <br>
+                  Male
+              </td>
+          </tr>
+          <tr>
+              <td>BOKEH</td>
+              <td>
+                  Default
+                  <br>
+                  Max
+              </td>
+          </tr>
+          <tr>
+              <td>LOW LIGHT</td>
+              <td>
+                  Flash ON
+                  <br>
+                  Flash OFF
+              </td>
+          </tr>
+      </table>
+  </div>
+
+</div>
+<script>
+  var x, i, j, l, ll, selElmnt, a, b, c;
+  /*look for any elements with the class "custom-select":*/
+  x = document.getElementsByClassName("custom-select");
+  l = x.length;
+  for (i = 0; i < l; i++) {
+  selElmnt = x[i].getElementsByTagName("select")[0];
+  ll = selElmnt.length;
+  /*for each element, create a new DIV that will act as the selected item:*/
+  a = document.createElement("DIV");
+  a.setAttribute("class", "select-selected");
+  a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
+  x[i].appendChild(a);
+  /*for each element, create a new DIV that will contain the option list:*/
+  b = document.createElement("DIV");
+  b.setAttribute("class", "select-items select-hide");
+  for (j = 1; j < ll; j++) {
+      /*for each option in the original select element,
+      create a new DIV that will act as an option item:*/
+      c = document.createElement("DIV");
+      c.innerHTML = selElmnt.options[j].innerHTML;
+      c.addEventListener("click", function(e) {
+          /*when an item is clicked, update the original select box,
+          and the selected item:*/
+          var y, i, k, s, h, sl, yl;
+          s = this.parentNode.parentNode.getElementsByTagName("select")[0];
+          sl = s.length;
+          h = this.parentNode.previousSibling;
+          for (i = 0; i < sl; i++) {
+          if (s.options[i].innerHTML == this.innerHTML) {
+              s.selectedIndex = i;
+              h.innerHTML = this.innerHTML;
+              y = this.parentNode.getElementsByClassName("same-as-selected");
+              yl = y.length;
+              for (k = 0; k < yl; k++) {
+              y[k].removeAttribute("class");
+              }
+              this.setAttribute("class", "same-as-selected");
+              break;
+          }
+          }
+          h.click();
+      });
+      b.appendChild(c);
+  }
+  x[i].appendChild(b);
+  a.addEventListener("click", function(e) {
+      /*when the select box is clicked, close any other select boxes,
+      and open/close the current select box:*/
+      e.stopPropagation();
+      closeAllSelect(this);
+      this.nextSibling.classList.toggle("select-hide");
+      this.classList.toggle("select-arrow-active");
+      });
+  }
+  function closeAllSelect(elmnt) {
+  /*a function that will close all select boxes in the document,
+  except the current select box:*/
+  var x, y, i, xl, yl, arrNo = [];
+  x = document.getElementsByClassName("select-items");
+  y = document.getElementsByClassName("select-selected");
+  xl = x.length;
+  yl = y.length;
+  for (i = 0; i < yl; i++) {
+      if (elmnt == y[i]) {
+      arrNo.push(i)
+      } else {
+      y[i].classList.remove("select-arrow-active");
+      }
+  }
+  for (i = 0; i < xl; i++) {
+      if (arrNo.indexOf(i)) {
+      x[i].classList.add("select-hide");
+      }
+  }
+  }
+  /*if the user clicks anywhere outside the select box,
+  then close all select boxes:*/
+  document.addEventListener("click", closeAllSelect);
+</script>
 {% endblock %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      {% for m in cname %}
+      <th scope="col">{{m}}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+      {% for c in cats %}
+    <tr>
+      
+      <th scope="row">{{c.name}}</th>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

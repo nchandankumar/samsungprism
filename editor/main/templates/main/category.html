@@ -1,5 +1,52 @@
 {% extends "main/base.html"%}
 {% block content%}
+<h4 title="{{name}}">{{name}}/</h4>
+<div class="box-container">
+    {%for c in mob%}
+  <div class="box" onclick="document.location='{% url 'main:viewimage' id c.id %}'">
+      <div class="first-box-container">
+          <a href="{% url 'main:viewimage' id c.id %}" class="anchor_icon">
+              <i class="fa-solid fa-folder"></i>
+          </a>
+      </div>
+      <div class="second-box-container">
+          <div class="folder-name">
+              <h4 title="{{c}}">{{c}}</h4>
+          </div>
+          <div class="download-folder">
+              
+          </div>
+      </div>
+  </div>
+  {% endfor %}
+</div>
+<script>
+    var boxes = document.getElementsByClassName("box");
+    for (var i = 0; i < boxes.length; i++) {
+        boxes[i].addEventListener("mouseover", function() {
+            this.getElementsByClassName("anchor_icon")[0].innerHTML = "<i class='fa-solid fa-folder-open'></i>";
+        });
+        boxes[i].addEventListener("mouseout", function() {
+            this.getElementsByClassName("anchor_icon")[0].innerHTML = "<i class='fa-solid fa-folder'></i>";
+        });
+    }
+</script>
+{% endblock %}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                {% for c in cat %}
+                <li class=" list-group-item">
+                    <a href="">
+                        {{c.name}}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
@@ -23,22 +70,6 @@
                     </tbody>
                   </table>
             </div>
-        </div>
-    </div>
-</div>
-{% endblock %}
-<div class="row">
-    <div class="col-md-3">
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                {% for c in cat %}
-                <li class=" list-group-item">
-                    <a href="">
-                        {{c.name}}
-                    </a>
-                </li>
-                {% endfor %}
-            </ul>
         </div>
     </div>
 </div>

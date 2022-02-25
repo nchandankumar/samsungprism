@@ -1,31 +1,36 @@
 {% extends "main/base.html"%}
 {% block content%}
-<div class="container">
-  <div class="row">
-      
-      <div class="col-md-12">
-          <div class="row">
-
-            <table class="table table-striped table-hover">
-              <thead>
-                <tr>
-                  <th scope="col">Model Name</th>   
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-              {%for n in mobile%}
-                <tr>
-                  <td scope="row">{{n}}</td>
-                  <td><a href="{% url 'main:category' n.id %}" type="button" class="btn btn-outline-secondary">Open</a>
-                    <a href="{% url 'main:report' n.id %}" type="button" class="btn btn-outline-secondary">Report Page</a></td>
-                </tr>
-              {% endfor %}
-
-              </tbody>
-            </table>
+<div class="box-container">
+  {%for n in mobile%}
+  <div class="box" onclick="document.location='{% url 'main:category' n.id %}'">
+      <div class="first-box-container">
+          <a href="#" class="anchor_icon">
+              <i class="fa-solid fa-folder"></i>
+          </a>
+      </div>
+      <div class="second-box-container">
+          <div class="folder-name">
+              <h4 title="{{n}}">{{n}}</h4>
+          </div>
+          <div class="download-folder">
+              <a href="{% url 'main:report' n.id %}" class="anchor_icon_2">
+                  <i class="fa-solid fa-cloud-arrow-down"></i>
+              </a>
           </div>
       </div>
   </div>
+  {% endfor %}
 </div>
+<script>
+    var boxes = document.getElementsByClassName("box");
+    for (var i = 0; i < boxes.length; i++) {
+        boxes[i].addEventListener("mouseover", function() {
+            this.getElementsByClassName("anchor_icon")[0].innerHTML = "<i class='fa-solid fa-folder-open'></i>";
+        });
+        boxes[i].addEventListener("mouseout", function() {
+            this.getElementsByClassName("anchor_icon")[0].innerHTML = "<i class='fa-solid fa-folder'></i>";
+        });
+    }
+</script>
+
 {% endblock %}
