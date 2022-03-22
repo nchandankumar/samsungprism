@@ -10,6 +10,8 @@ urlpatterns = [
     path('category/<str:mid>/', views.category, name='category'),
     path('viewimage/<str:mid>/<str:cid>/',views.viewCategoryImage,name='viewimage'),
     path('editor/<str:mid>/<str:cid>/',views.editor,name='editor'),
+    path('cropedimages/<str:mid>/<str:cid>/',views.cropedimages,name='cropedimages'),
     path('photocrop/<str:mid>/<str:cid>/',views.photocrop,name='photocrop'),
+    path('photocropsave/<str:mid>/<str:cid>/',views.photocropsave,name='photocropsave'),
     path('report/<str:mid>/',views.report,name='report')
 ]

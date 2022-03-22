@@ -1,320 +1,239 @@
 {% extends "main/base.html"%}
 {% load static%}
+
+{% comment %}
 {% load crispy_forms_tags %}
+{% endcomment %}
+
 {% block content%}
-<style>
-    * {
-        padding: 0;
-        margin: 0;
-    }
 
-    body {
-        font-family: Roboto, Helvetica, Arial, sans-serif;
-        font-size: 1rem;
-    }
-
-
-    .wrapper {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-        padding: .3rem;
-    }
-
-    .grid-item {
-        display: flex;
-        flex-direction: column;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        background-color: rgba(255, 255, 255, 0.8);
-        border: 1px solid rgba(0, 0, 0, 0.8);
-        font-size: 30px;
-        text-align: center;
-    }
-
-    .button-groups-main {
-        font-size: 2rem;
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        margin-bottom: 1rem;
-    }
-
-
-    .button-groups {
-        display: none;
-
-    }
-
-    img{
-        transform: scale(1,1);
-    }
-
-    .height-fix {
-        height: 8vh;
-    }
-    #myWindow {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background: #999;
-}
-
-/* #myContent {
-    position: relative;
-    display: flex;
-    align-items: center;
-    transform: scale(1,1);
-} */
-</style>
-<script src="https://code.jquery.com/jquery-1.12.4.min.js">
-</script>
-<script>
-    
-</script>
-{% if messages %}
-{% for message in messages %}
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>{{ message }}!</strong>
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  {% endfor %}
-{% endif %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="row">
-            <h6>Model Name: <strong>{{name}}</strong></h6>
-            <h6>Category Name: <strong>{{cate}}</strong></h6>
-            {% for ph in samsung %}
-            <div class="col">
-                <div class="box" id="myWindow" style="
-                width: 300px;
-                height: 400px;
-                overflow: hidden;
-                border-style: solid;
-            ">
-                    <img id="myContent" style="width: 100%;" name="geeks" GFG="250" src="{{ph.image.url}}">
+<div class="parent">
+    <div class="div21">
+        {% for ph in samsung %}
+        <div class="selected-competitor">
+            <div class="selected-competitor-first-half">
+                <div class="selected-competitor-name">
+                    <h5>{{ph.cname}}</h5>
                 </div>
-                <p>Competitor: <strong>{{ph.cname}}</strong></p>
             </div>
-            {% endfor %}
-            {% for photo in photos %}
-            <div class="col">
-                <div class="box" id="myWindow" style="
-                width: 300px;
-                height: 400px;
-                overflow: hidden;
-                border-style: solid;
-            ">
-                    <img id="myContent" style="width: 100%;" name="geeks" GFG="250" src="{{photo.image.url}}">
+            <div class="selected-competitor-second-half" style="overflow: scroll;">
+                <div class="selected-competitor-img">
+                    <img id="image0" src="{{ph.image.url}}" class="each-selected-competitor-img" alt="">
                 </div>
-                <p>Competitor: <strong>{{photo.cname}}</strong></p>
             </div>
-            {% empty %}
-            <h3>No photos...</h3>
-            {% endfor %}
-
         </div>
+        {% endfor %}
     </div>
 
+    {% comment %}
+    {{ testing }}
+    {% for i in testing %}
+    <img src="{{ i.image.url }}" alt="" width="50px">
+    {% endfor %}
+    {% endcomment %}
+
+    <!-- <div class="div-scroll-horizontal"> -->
+        <div class="div22">    
+            {% for ph in photo %}
+            <div class="selected-competitor">
+                <div class="selected-competitor-first-half">
+                    <div class="selected-competitor-name">
+                        <h5>{{ph.cname}}</h5>
+                    </div>
+                </div>
+                <div class="selected-competitor-second-half" style="overflow: scroll;">
+                    <div class="selected-competitor-img" >
+                        <img id="image{{ forloop.counter }}" src="{{ph.image.url}}" class="each-selected-competitor-img" alt="">
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    <!-- </div> -->
+    
+    <!-- <div class="div23">
+        {% for photo in photo2 %}
+        <div class="selected-competitor">
+            <div class="selected-competitor-first-half">
+                <div class="selected-competitor-name">
+                    <h5>{{photo.cname}}</h5>
+                </div>
+            </div>
+            <div class="selected-competitor-second-half" style="overflow: scroll;">
+                <div class="selected-competitor-img">
+                    <img id="image3" src="{{photo.image.url}}" class="each-selected-competitor-img" alt="">
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div> -->
+    <div class="div23">
+        <div class="editor-second-container">
+            <div class="editor-framework">
+                <!-- <div class="highlighter">
+                    <div id="highlighter">
+                        <i class="fa-solid fa-pen-clip"></i> highlighter
+                    </div>
+                </div> -->
+                <!-- <div class="icon-tools">
+                    icon tools
+                </div>
+                <div class="shape-fill-func">
+                    Shape Fill
+                </div>
+                <div class="shape-outline-func">
+                    Shape Outline Fill
+                </div>
+                <div class="shape-effect-func">
+                    Shape Effect
+                </div> -->
+                <form action="{% url 'main:photocrop' mid cid %}" method="post">
+                    {% csrf_token %} 
+                    <select class="form-select " id='selectedimage' name ='selectedimage'>
+                        <option value="-1" default>Select image to crop</option>
+                        {% for ph in samsung %}
+                        <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
+                        {% endfor %}
+                        {% for photo in photo1 %}
+                        <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
+                        {% endfor %}
+                        {% for photo in photo2 %}
+                        <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Crop
+                    </button>
+                </form>
+                <div class="crop-selected-image-func">
+                    <div id="crop-image">
+                        <i class="fa-solid fa-crop-simple"></i>
+                    </div>
+                    <div class="crop-img-text">
+                        Crop Image
+                    </div>
+                </div>
+                <!-- <div class="ratio-info-func">
+                    1 : 1
+                </div> -->
+                <div class="zoom-in-out-func">
+                    <div class="zoom-out" id="zoomout" style="cursor: pointer;">
+                        <div class="zoom-out-icon">
+                            <i class="fa-solid fa-magnifying-glass-minus"></i>
+                        </div>
+                        <div class="zoom-out-text">
+                            Zoom Out
+                        </div>
+                    </div>
+                    <div class="zoom-in"  id="zoomin" style="cursor: pointer;">
+                        <div class="zoom-in-icon">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+                        <div class="zoom-in-text">
+                            Zoom In
+                        </div>
+                    </div>
+                </div>
+                <div class="add-result-func">
+                    <div class="">
+                        <button id="add-result" class="add-result-btn">Add Result</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<div class="row">
-    <div class="col md-3 my-4">
-        <form action="{% url 'main:photocrop' mid cid %}" method="post">
-            {% csrf_token %} 
+{% for c in cmmt %}
+{{c.comment|safe}}
+{% endfor%}
+
+<div id="myModal" class="modal">
+  <div class="model-container">
+    <div class="modal-content">
+      <span id="close-model" class="close">&times;</span>
+      <form action="" method="POST" class="comment-form">
+        {{ form.media }}
+        {% csrf_token %}
+        <div class="div-name">
+            <label for="">Name</label>
+            {{form.name}}
+            <!-- <input type="text" name="name" id="id_" placeholder="Name" required> -->
+        </div>
+        <div class="div-name">
+            <label for="">Select Image to Crop</label>
             <select class="form-select " id='selectedimage' name ='selectedimage'>
                 <option value="-1" default>Select image to crop</option>
                 {% for ph in samsung %}
                 <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
                 {% endfor %}
-                {% for photo in photos %}
+                {% for photo in photo1 %}
+                <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
+                {% endfor %}
+                {% for photo in photo2 %}
                 <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
                 {% endfor %}
             </select>
-            <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Crop
-            </button>
-        </form>
-    </div>
-    <div class="col md-3">
-        <button  type="button" class="btn btn-outline-secondary mx-3 my-4" onclick="zoomin()"><i
-                class="fas fa-search-plus"></i>
-            Zoom-In
-        </button>
-    </div>
-    <div class="col md-3">
-        <button  type="button" class="btn btn-outline-secondary mx-3 my-4" onclick="zoomout()"><i
-                class="fas fa-search-minus"></i>
-            Zoom-Out
-        </button>
-    </div>
-    <div class="col md-3">
-        <button type="button" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-highlighter"></i>
-            HighLight
-        </button>
-    </div>
-    <div class="col md-3">
-        <button type="button" class="btn btn-outline-secondary mx-3 my-4" data-bs-toggle="modal"
-            data-bs-target="#addcomment"><i class="fas fa-plus"></i> Add
-            Comments</button>
-    </div>
-    <div class="col md-3">
-        <button type="button" class="btn btn-outline-secondary mx-3 my-4" data-bs-toggle="modal"
-        data-bs-target="#viewcomment"><i class="fas fa-eye"></i> View
-        Comments</button>
-    </div>
-    <div class="col md-3">
-        <a type="button" href="" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-file-alt"></i> Generate
-            Report</a>
-    </div>
-</div>
-
-<div class="modal fade" id="addcomment" tabindex="-1" aria-labelledby="addcommentLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addcommentLabel">Add Comment</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="form-floating mb-3">
-                        <input class="form-control" placeholder="Name" id="name" name="name"></input>
-                        <label for="name">Name</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" placeholder="Leave a comment here" id="comment" name="comment"
-                            style="height: 100px"></textarea>
-                        <label for="comment">Comments</label>
-                    </div>
-                    <button type="submit" class="btn btn-outline-secondary ">Submit</button>
-                </form>
-            </div>
         </div>
-    </div>
-</div>
-
-<div class="modal fade" id="viewcomment" tabindex="-1" aria-labelledby="viewcommentLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="viewcommentLabel">Comments</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                {% for c in cmmt %}
-                <strong>{{c.name}}</strong>
-                <p><em>{{c.comment}}</em></p>
-                <hr>
-                {% endfor %}
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
-            </div>
+        <div class="div-comment">
+            <label for="">Comment</label>    
+            {{form.comment}}
+            <!-- <textarea name="comment" id="" cols="30" rows="10"></textarea> -->
         </div>
+        <input type="submit" class="submit-form-comment" value="submit">
+      </form>
     </div>
+  </div>
 </div>
-<script type="text/javascript">
-        
-    var sc = 1
-    function zoomin() {
-        var GFG = document.getElementsByName("geeks");
-        // var currWidth = GFG[0].clientWidth;
-        
 
-        if (sc<2.5){
-            sc = sc+0.25;
-        // GFG[0].style.width = (currWidth + 100) + "px";0
-        GFG[0].style.transform = `scale(${sc},${sc})`;
-        GFG[1].style.transform = `scale(${sc},${sc})`;
-        GFG[2].style.transform = `scale(${sc},${sc})`;
-        GFG[3].style.transform = `scale(${sc},${sc})`;
-        };
-        // currWidth = GFG[1].clientWidth;
-        // GFG[1].style.width = (currWidth + 100) + "px";
-        // currWidth = GFG[2].clientWidth;
-        // GFG[2].style.width = (currWidth + 100) + "px";
-        // currWidth = GFG[3].clientWidth;
-        // GFG[3].style.width = (currWidth + 100) + "px";
-    }
-
-    function zoomout() {
-        var GFG = document.getElementsByName("geeks");
-        // var currWidth = GFG[0].clientWidth;
-        // GFG[0].style.width = (currWidth - 100) + "px";
-        // currWidth = GFG[1].clientWidth;
-        // GFG[1].style.width = (currWidth - 100) + "px";
-        // currWidth = GFG[2].clientWidth;
-        // GFG[2].style.width = (currWidth - 100) + "px";
-        // currWidth = GFG[3].clientWidth;
-        // GFG[3].style.width = (currWidth - 100) + "px";
-        
-        if (sc>0.75){
-            sc = sc-0.25;
-        // GFG[0].style.width = (currWidth + 100) + "px";0
-        GFG[0].style.transform = `scale(${sc},${sc})`;
-        GFG[1].style.transform = `scale(${sc},${sc})`;
-        GFG[2].style.transform = `scale(${sc},${sc})`;
-        GFG[3].style.transform = `scale(${sc},${sc})`;
-        };
-    }
-</script>
-<script src="{% static 'main/vanilla-js-wheel-zoom/dist/wheel-zoom.min.js' %}">
-    console.log(1);
-</script>
 <script>
-    WZoom.create('myContent2');
-    // WZoom.create('myContent1');
-    /**
- * Create WZoom instance
- * @param {string|HTMLElement} selectorOrHTMLElement
- * @param {Object} [options]
- * @returns {WZoom}
- */
-    const wzoom = WZoom.create('img');
-    document.querySelector('[data-zoom-up]').addEventListener('click', () => {
-    wzoom.zoomUp();
-});
+    var modal = document.getElementById("myModal");
+    var result_btn = document.getElementById("add-result");
+    var span = document.getElementById("close-model");
 
-document.querySelector('[data-zoom-down]').addEventListener('click', () => {
-    wzoom.zoomDown();
-});
+    result_btn.onclick = function() {
+        modal.style.display = "block";
+    }
 
-    </script>
-   
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
 
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    document.addEventListener('DOMContentLoaded', function () {
+
+    var a=1.0
+
+    document.getElementById("zoomin").addEventListener("click", () => {
+        if(a<=5.0)
+        {
+            document.getElementById("image0").style.transform=`scale(${a})`
+
+            document.getElementById("image1").style.transform=`scale(${a})`
+
+            document.getElementById("image2").style.transform=`scale(${a})`
+
+            a=a+0.5
+        }
+        console.log(a)
+    });
+
+    document.getElementById("zoomout").addEventListener("click", () => {
+        if(a>1.0)
+        {
+            a-=0.5
+            console.log(a);
+            document.getElementById("image0").style.transform=`scale(${a})`
+
+            document.getElementById("image1").style.transform=`scale(${a})`
+
+            document.getElementById("image2").style.transform=`scale(${a})`
+        }
+    });
+    });
+</script>
 
 {% endblock %}
-
-<a href="  " class="btn btn-dark btn-block btn-sm m-1">Zoom In</a>
-<a href="  " class="btn btn-dark btn-block btn-sm m-1">Zoom out</a>
-<button type="button" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-file-alt"></i> Generate
-    Report</button>
-<button type="button" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-download"></i>
-    Download
-</button>
-<h6>Model Name: {{name}}</h6>
-<h6>Category Name: {{cate}}</h6>
-{% for photo in photos %}
-<div class="col-md-4">
-    <div class="card my-2">
-        <img class="image-thumbail" src="{{photo.image.url}}" alt="Card image cap">
-
-        <div class="card-body">
-            <small>competitor: <strong>{{photo.cname}}</strong></small>
-        </div>
-    </div>
-</div>
-{% empty %}
-<h3>No photos...</h3>
-{% endfor %}
-<button type="button" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Crop
-</button>
-
-<ul class="messages">
-    {% for message in messages %}
-    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-    {% endfor %}
-</ul>
 

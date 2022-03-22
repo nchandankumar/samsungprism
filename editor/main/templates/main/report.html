@@ -12,6 +12,7 @@
                   <option value="Preview">Preview</option>
                   <option value="Specifications">Specifications</option>
                   <option value="Image Set">Image Set</option>
+                  <option value="Comments">Comments</option>
               </select>
           </div>
       </div>
@@ -20,11 +21,12 @@
       </div>
       <div class="div4">
           <div class="custom-select" style="width:200px;">
-              <select name="" id="">
-                  <option value="Preview">Preview</option>
-                  <option value="Specifications">Specifications</option>
-                  <option value="Image Set">Image Set</option>
-              </select>
+            <select name="" id="">
+                <option value="Preview">Preview</option>
+                <option value="Specifications">Specifications</option>
+                <option value="Image Set">Image Set</option>
+                <option value="Comments">Comments</option>
+            </select>
           </div>
       </div>
       <div class="div5">
@@ -33,11 +35,12 @@
       </div>
       <div class="div6">
           <div class="custom-select" style="width:200px;">
-              <select name="" id="">
-                  <option value="Preview">Preview</option>
-                  <option value="Specifications">Specifications</option>
-                  <option value="Image Set">Image Set</option>
-              </select>
+            <select name="" id="">
+                <option value="Preview">Preview</option>
+                <option value="Specifications">Specifications</option>
+                <option value="Image Set">Image Set</option>
+                <option value="Comments">Comments</option>
+            </select>
           </div>
       </div>
       <div class="div7">
@@ -115,8 +118,9 @@
             <th width="25%">Specifications</th>
             <th>Comments</th>
           </tr>
+          {% for i in cats%}
           <tr>
-            <td>HDR</td>
+            <td>{{i}}</td>
             <td>
                 Shade+ Building
                 <br>
@@ -127,30 +131,7 @@
                 With Person
               </td>
           </tr>
-          <tr>
-              <td>BEAUTY</td>
-              <td>
-                  Female
-                  <br>
-                  Male
-              </td>
-          </tr>
-          <tr>
-              <td>BOKEH</td>
-              <td>
-                  Default
-                  <br>
-                  Max
-              </td>
-          </tr>
-          <tr>
-              <td>LOW LIGHT</td>
-              <td>
-                  Flash ON
-                  <br>
-                  Flash OFF
-              </td>
-          </tr>
+          {% endfor%}
       </table>
   </div>
 

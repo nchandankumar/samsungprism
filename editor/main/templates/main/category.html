@@ -14,8 +14,10 @@
               <h4 title="{{c}}">{{c}}</h4>
           </div>
           <div class="download-folder">
-              
-          </div>
+            <a href="{% url 'main:cropedimages' id c.id %}" class="anchor_icon_2">
+                <i class="fas fa-crop"></i>
+            </a>
+        </div>
       </div>
   </div>
   {% endfor %}

@@ -1,0 +1,33 @@
+{% extends "main/base.html"%}
+{% block content%}
+{% if error %}
+{{error}}
+{% endif %}
+<div class="competitor-main">
+    <div class="competitor-heading">
+        <div class="comp-headings">
+            <h4>Model name: {{name}}</h4>
+            <h4>Category name: {{cate}}</h4>
+        </div>
+        <h3>Cropped Images</h3>
+    </div>
+    <div class="competitor-container">
+        {% for photo in cp %}
+        <div class="competitor-card">
+            <div class="competitor-card-first-section">
+                <img class="competitor-card-img" src="{{photo.cimage.url}}" alt="">
+            </div>
+            <div class="folder-name">
+                <h4>Download</h4>
+            </div>
+            <div class="download-folder">
+                <a href="{{photo.cimage.url}}" download class="anchor_icon_2"><i class="fa-solid fa-cloud-arrow-down"></i></a>
+            </div>
+        </div>
+        {% empty %}
+        <h3>No photos...</h3>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}

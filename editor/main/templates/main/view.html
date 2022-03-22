@@ -1,5 +1,51 @@
 {% extends "main/base.html"%}
 {% block content%}
+{% if error %}
+{{error}}
+{% endif %}
+<form action="{% url 'main:viewimage' mid cid %}" method="post">
+    {% csrf_token %}
+<div class="competitor-main">
+    <div class="competitor-heading">
+        <div class="comp-headings">
+            <h4>Model name: {{name}}</h4>
+            <h4>Category name: {{cate}}</h4>
+        </div>
+        <div class="editor" >
+            <!-- <a href="{% url 'main:editor' mid cid %}" class="go-to-editor">Go to editor</a> -->
+            <button type="submit" class="go-to-editor" >Go To Editor</button>
+        </div>
+    </div>
+    <div class="competitor-container">
+        {% for photo in photos %}
+        <div class="competitor-card">
+            <div class="competitor-card-first-section">
+                <img class="competitor-card-img" src="{{photo.image.url}}" alt="">
+            </div>
+            
+            <div class="competitor-card-second-section">
+                <div class="competitor-info">
+                    <div class="compe-name">
+                        <h5>Competitor: {{photo.cname}}</h5>
+                    </div>
+                    <div class="">
+                        {% if not photo.cname|lower == "samsung" %}
+                        <label class="compe-check-box">
+                            <input type="checkbox" name="repid" value="{{photo.id}}" id="id_{{photo.cname}}">
+                            <span class="checkmark"></span>
+                        </label>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <h3>No photos...</h3>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
 <div class="container">
     <div class="row">
         <div class="col-md-9">
@@ -22,9 +68,7 @@
             
 
             </div>
-            <a href="{% url 'main:editor' mid cid %}" class="btn btn-outline-secondary">Go To Editor</a>
         </div>
     </div>
 </div>
-
-{% endblock %}
+</form>

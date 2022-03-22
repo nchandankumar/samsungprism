@@ -1,4 +1,6 @@
 from django.db import models
+# from django_quill.fields import QuillField
+from ckeditor.fields import RichTextField
 
 class Mobile(models.Model): 
     name = models.CharField(max_length=100, null=False, blank=False) 
@@ -31,7 +33,7 @@ class Photocrop(models.Model):
         Photo, on_delete=models.SET_NULL, null=True, blank=True) 
     cimage = models.ImageField(null=False, blank=False) 
     def __str__(self): 
-        return self.id
+        return self.cimage
 
 class Comments(models.Model):
     mobile = models.ForeignKey( 
@@ -39,7 +41,8 @@ class Comments(models.Model):
     category = models.ForeignKey( 
         Category, on_delete=models.SET_NULL, null=True, blank=True) 
     name = models.CharField(max_length=100, null=False, blank=False)
-    comment = models.TextField(null=False,blank=False)
+    comment = RichTextField(blank=True,null=True)
+    # comment = models.TextField(null=False,blank=False)
     def __str__(self):
         return self.name
 
