@@ -2,6 +2,7 @@ import imp
 import re
 from tempfile import tempdir
 from urllib import request
+from urllib.robotparser import RequestRate
 from xml.etree.ElementTree import Comment
 from django.conf import settings
 from django.http import HttpResponse
@@ -76,29 +77,21 @@ def viewCategoryImage(request,mid,cid):
 	# return redirect('main:editor',mid,cid)
 	# return context
 # def editor(request,mid,cid):
+
 def editor(request,mid,cid):
 
 	# data=viewCategoryImage(HttpResponse)
 	# print(context)
 	# mid=request.GET.get('mid')	
 	# cid=request.GET.get('cid')
-	global data
-	print(len(data))
-	print(data)	
-	ph,imgid=[],[]
+	global data	
+	strData = ",".join(data)
+	ph = []
 	name=Mobile.objects.get(id=mid)
 	cate=Category.objects.get(id=cid)
 	for i in range(len(data)):
 		ph.append(Photo.objects.get(category_id=cid,mobile_id=mid,id=int(data[i])))
-		imgid.append("image"+str(i+2))
 		# itr.append(i)
-
-	mylist=zip(ph,imgid)
-	print("Here",mylist)
-	print("list of photos",ph)
-	print("list of ids",imgid)
-	for o,p in mylist:
-		print(o.image.url,p)
 	# for i,j in mylist:
 	# 	for k in i:
 	# 		print(k.image.url)
@@ -106,7 +99,6 @@ def editor(request,mid,cid):
 	# photo1=Photo.objects.filter(category_id=cid,mobile_id=mid,id=int(data[0]))
 	# photo2=Photo.objects.filter(category_id=cid,mobile_id=mid,id=int(data[1]))
 	samsung=Photo.objects.filter(cname='samsung',category_id=cid,mobile_id=mid)
-	print("samsung",samsung)
 	# print("p1",photo1)
 	# print("p2",photo2)
 	# photos=[]
@@ -131,16 +123,32 @@ def editor(request,mid,cid):
 	# print(photos1)
 	# print(photos1)
 	if request.method == 'POST':
-		
 		n = request.POST.get('name')
+		complist = request.POST.get('complist')
+		plst = complist.split(",")
 		cmt = request.POST.get('comment')
 		res=Comments.objects.create(mobile=name,category=cate,name=n,comment=cmt)
+		for eachPID in range(len(plst)):
+			photoObj = Photo.objects.get(id = int(plst[eachPID]))
+			res.compList.add(photoObj)
 		if res:
 			messages.info(request, 'Thank You for the comment')
 		else:
 			messages.info(request, 'No Comment posted')
 	form = CommentForm()
 	cmmt = Comments.objects.filter(category_id=cid,mobile_id=mid)
+
+	compLIST = []
+	for lore in cmmt:
+		for eachlore in lore.compList.all():
+			compLIST.append(eachlore.id)
+
+	print("CID",cid,"-","MID",mid,"-","compLIST",compLIST)
+	cmmt1 = Comments.objects.filter(category_id=cid,mobile_id=mid,compList__in = compLIST).distinct()
+	print("Comment",cmmt1)
+	for ec in cmmt1:
+		print("Yuck",ec.comment)
+
 	cmmts=[]
 	# for i in cmmt:
 	# 	print(i.comment)
@@ -148,7 +156,6 @@ def editor(request,mid,cid):
 	# 	cmmts.extend([(i.name, i.comment)])
 	# print(cmmts)
 	# cp = Photocrop.objects.filter(category_id=cid,mobile_id=mid)
-	print(ph)
 	context={
 		'mid':mid,
 		'cid':cid,
@@ -160,7 +167,8 @@ def editor(request,mid,cid):
 		'photo':ph,
 		# 'testing': ph,
 		'form':form,
-		'cmmt':cmmt,
+		"com_list": strData,	
+		'cmmt':cmmt1,
 		# 'cp':cp
     }
 	

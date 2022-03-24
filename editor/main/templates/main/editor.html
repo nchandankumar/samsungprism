@@ -7,7 +7,7 @@
 
 {% block content%}
 
-<div class="parent">
+<div class="com_parent">
     <div class="div21">
         {% for ph in samsung %}
         <div class="selected-competitor">
@@ -94,11 +94,8 @@
                         {% for ph in samsung %}
                         <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
                         {% endfor %}
-                        {% for photo in photo1 %}
-                        <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
-                        {% endfor %}
-                        {% for photo in photo2 %}
-                        <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
+                        {% for ph in photo %}
+                        <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
                         {% endfor %}
                     </select>
                     <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Crop
@@ -143,7 +140,7 @@
     </div>
 </div>
 {% for c in cmmt %}
-{{c.comment|safe}}
+<p>Here {{c.comment|safe}} {{ cmmt|length }} </p>
 {% endfor%}
 
 <div id="myModal" class="modal">
@@ -156,27 +153,13 @@
         <div class="div-name">
             <label for="">Name</label>
             {{form.name}}
-            <!-- <input type="text" name="name" id="id_" placeholder="Name" required> -->
         </div>
         <div class="div-name">
-            <label for="">Select Image to Crop</label>
-            <select class="form-select " id='selectedimage' name ='selectedimage'>
-                <option value="-1" default>Select image to crop</option>
-                {% for ph in samsung %}
-                <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
-                {% endfor %}
-                {% for photo in photo1 %}
-                <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
-                {% endfor %}
-                {% for photo in photo2 %}
-                <option value="{{photo.id}}">{{photo.cname}}{{photo.id}}</option>
-                {% endfor %}
-            </select>
+            <input type="text" name="complist" id="id_complist" value="{{ com_list }}">
         </div>
         <div class="div-comment">
             <label for="">Comment</label>    
             {{form.comment}}
-            <!-- <textarea name="comment" id="" cols="30" rows="10"></textarea> -->
         </div>
         <input type="submit" class="submit-form-comment" value="submit">
       </form>
@@ -210,11 +193,9 @@
         if(a<=5.0)
         {
             document.getElementById("image0").style.transform=`scale(${a})`
-
-            document.getElementById("image1").style.transform=`scale(${a})`
-
-            document.getElementById("image2").style.transform=`scale(${a})`
-
+            {% for ph in photo %}
+            document.getElementById("image{{ forloop.counter }}").style.transform=`scale(${a})`
+            {% endfor %}
             a=a+0.5
         }
         console.log(a)
@@ -227,9 +208,9 @@
             console.log(a);
             document.getElementById("image0").style.transform=`scale(${a})`
 
-            document.getElementById("image1").style.transform=`scale(${a})`
-
-            document.getElementById("image2").style.transform=`scale(${a})`
+            {% for ph in photo %}
+            document.getElementById("image{{ forloop.counter }}").style.transform=`scale(${a})`
+            {% endfor %}
         }
     });
     });

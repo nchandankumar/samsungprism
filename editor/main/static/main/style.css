@@ -168,7 +168,7 @@ input[type=checkbox].openSidebarMenu {
     transition: all 0.3s;
     box-sizing: border-box;
     cursor: pointer;
-    position: absolute;
+    position: fixed;
     z-index: 99;
     height: 100%;
     width: 100%;
@@ -616,7 +616,7 @@ img.each-selected-competitor-img {
     display: flex;
     flex-direction: column;
     /* width: 12.5rem; */
-    height: 100vh;
+    /* height: 100vh; */
     justify-content: space-around;
     align-items: center;
 }
@@ -741,12 +741,13 @@ img.each-selected-competitor-img {
     
 }
 
-.parent {
+.com_parent {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: 1fr;
     grid-column-gap: 0px;
     grid-row-gap: 0px;
+    border: 1px solid #000;
 }
 
 .div21 { 
@@ -758,33 +759,14 @@ img.each-selected-competitor-img {
     grid-area: 1 / 2 / 2 / 4;
     border: 1px solid #000;
     display: contents;
-    overflow-x: scroll;
-    width: 100px;
-
+    /* overflow-x: scroll;
+    width: 100px; */
 }
 .div23 { 
     grid-area: 1 / 4 / 2 / 5;
     border: 1px solid #000;
-
+    display: contents;
 }
-
-/* .div21 { 
-    grid-area: 1 / 1 / 2 / 2;
-    border: 1px solid #000;
-
-}
-.div22 { 
-    grid-area: 1 / 2 / 2 / 3;
-    border: 1px solid #000;
-}
-.div23 { 
-    grid-area: 1 / 3 / 2 / 4;
-    border: 1px solid #000;
-}
-.div24 { 
-    grid-area: 1 / 4 / 2 / 5;
-    border: 1px solid #000;
-} */
 
 
 /* Editor Styles */
