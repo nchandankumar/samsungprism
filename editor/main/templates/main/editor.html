@@ -1,6 +1,6 @@
 {% extends "main/base.html"%}
 {% load static%}
-
+{% load CompTag %}
 {% comment %}
 {% load crispy_forms_tags %}
 {% endcomment %}
@@ -87,6 +87,20 @@
                 <div class="shape-effect-func">
                     Shape Effect
                 </div> -->
+                <form action="{% url 'main:photohighlight' mid cid %}" method="post">
+                    {% csrf_token %} 
+                    <select class="form-select " id='selected  image' name ='selectedimage'>
+                        <option value="-1" default>Select image to highlight</option>
+                        {% for ph in samsung %}
+                        <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
+                        {% endfor %}
+                        {% for ph in photo %}
+                        <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Highlight
+                    </button>
+                </form>
                 <form action="{% url 'main:photocrop' mid cid %}" method="post">
                     {% csrf_token %} 
                     <select class="form-select " id='selectedimage' name ='selectedimage'>
@@ -139,9 +153,8 @@
         </div>
     </div>
 </div>
-{% for c in cmmt %}
-<p>Here {{c.comment|safe}} {{ cmmt|length }} </p>
-{% endfor%}
+
+{{ PH_ID_MID_CID|getComments|safe }}
 
 <div id="myModal" class="modal">
   <div class="model-container">
@@ -155,7 +168,7 @@
             {{form.name}}
         </div>
         <div class="div-name">
-            <input type="text" name="complist" id="id_complist" value="{{ com_list }}">
+            <input type="text" name="complist" id="id_complist" value="{{ com_list }}" hidden>
         </div>
         <div class="div-comment">
             <label for="">Comment</label>    

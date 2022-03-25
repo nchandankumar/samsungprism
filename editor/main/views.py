@@ -61,7 +61,7 @@ def viewCategoryImage(request,mid,cid):
     }
 	if request.method=="POST":
 		data=request.POST.getlist("repid")
-		if len(data)==2:
+		if len(data)<=10:
 			return redirect('main:editor',mid,cid)
 		else:
 			context['error']="Limit was Exceeded"
@@ -79,58 +79,22 @@ def viewCategoryImage(request,mid,cid):
 # def editor(request,mid,cid):
 
 def editor(request,mid,cid):
-
-	# data=viewCategoryImage(HttpResponse)
-	# print(context)
-	# mid=request.GET.get('mid')	
-	# cid=request.GET.get('cid')
 	global data	
-	strData = ",".join(data)
+	strData = ", ".join(data)
 	ph = []
 	name=Mobile.objects.get(id=mid)
 	cate=Category.objects.get(id=cid)
+
 	for i in range(len(data)):
 		ph.append(Photo.objects.get(category_id=cid,mobile_id=mid,id=int(data[i])))
-		# itr.append(i)
-	# for i,j in mylist:
-	# 	for k in i:
-	# 		print(k.image.url)
-		# print(i,j)
-	# photo1=Photo.objects.filter(category_id=cid,mobile_id=mid,id=int(data[0]))
-	# photo2=Photo.objects.filter(category_id=cid,mobile_id=mid,id=int(data[1]))
+	
 	samsung=Photo.objects.filter(cname='samsung',category_id=cid,mobile_id=mid)
-	# print("p1",photo1)
-	# print("p2",photo2)
-	# photos=[]
-	# photos.append(samsung)
-	# for i in data:
-	# 	p=Photo.objects.filter(pk=i)
-	# 	for j in p:
-	# 		photos.append(j)
-	# print(photos)
-	# print(photo,"photo")
-	# print(samsung)
-	# photos1=[]
-	# for i in photo:
-	# 	if i.cname =='samsung':
-	# 		continue
-	# 	else:
-	# 		photos.append(i)
-	# for i in range(len(photos)):
-	# 	if i <=1:
-	# 		photos1.append(photos[i])
-	# print(photos)
-	# print(photos1)
-	# print(photos1)
+	
 	if request.method == 'POST':
 		n = request.POST.get('name')
 		complist = request.POST.get('complist')
-		plst = complist.split(",")
 		cmt = request.POST.get('comment')
-		res=Comments.objects.create(mobile=name,category=cate,name=n,comment=cmt)
-		for eachPID in range(len(plst)):
-			photoObj = Photo.objects.get(id = int(plst[eachPID]))
-			res.compList.add(photoObj)
+		res=Comments.objects.create(mobile=name,category=cate,name=n,comment=cmt, compList = complist)
 		if res:
 			messages.info(request, 'Thank You for the comment')
 		else:
@@ -138,24 +102,13 @@ def editor(request,mid,cid):
 	form = CommentForm()
 	cmmt = Comments.objects.filter(category_id=cid,mobile_id=mid)
 
-	compLIST = []
-	for lore in cmmt:
-		for eachlore in lore.compList.all():
-			compLIST.append(eachlore.id)
+	PH_IDs = []
+	for eachObj in ph:
+		PH_IDs.append(str(eachObj.id))
 
-	print("CID",cid,"-","MID",mid,"-","compLIST",compLIST)
-	cmmt1 = Comments.objects.filter(category_id=cid,mobile_id=mid,compList__in = compLIST).distinct()
-	print("Comment",cmmt1)
-	for ec in cmmt1:
-		print("Yuck",ec.comment)
+	PH_ID_MID_CID = list(map(int, mid)) + list(map(int, cid)) + PH_IDs
 
-	cmmts=[]
-	# for i in cmmt:
-	# 	print(i.comment)
-	# for i in cmmt:
-	# 	cmmts.extend([(i.name, i.comment)])
-	# print(cmmts)
-	# cp = Photocrop.objects.filter(category_id=cid,mobile_id=mid)
+
 	context={
 		'mid':mid,
 		'cid':cid,
@@ -168,7 +121,8 @@ def editor(request,mid,cid):
 		# 'testing': ph,
 		'form':form,
 		"com_list": strData,	
-		'cmmt':cmmt1,
+		'cmmt':cmmt,
+		"PH_ID_MID_CID":PH_ID_MID_CID
 		# 'cp':cp
     }
 	
@@ -358,6 +312,17 @@ def photocropsave(request,mid,cid):
 			
 	return redirect('main:cropedimages',mid,cid)
 	return render(request,'croppedimages.html')
+def photoHighlight(request,mid,cid):
+	img = request.POST.get('selectedimage')
+	print("img",imgc)
+	photoc=Photo.objects.filter(pk=img,category_id=cid,mobile_id=mid)
+	print(photoc,"photoc")
+	context={	
+		'mid':mid,
+		'cid':cid,
+        'photo':photoc 
+    }
+	return render(request,'main/photohighlight.html',context)
 def report(request,mid):
 	data= Photo.objects.filter(mobile_id=mid)
 	cats = Category.objects.filter(mobile_id =mid)

@@ -40,10 +40,10 @@ class Comments(models.Model):
         Mobile, on_delete=models.SET_NULL, null=True, blank=True) 
     category = models.ForeignKey( 
         Category, on_delete=models.SET_NULL, null=True, blank=True) 
-    compList = models.ManyToManyField(Photo)
+    compList = models.CharField(max_length=100, null=False, blank=False,default="No Comments")
     name = models.CharField(max_length=100, null=False, blank=False)
     comment = RichTextField(blank=True,null=True)
-    # comment = models.TextField(null=False,blank=False)
+    
     def __str__(self):
         return self.name
 
