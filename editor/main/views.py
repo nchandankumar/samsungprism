@@ -80,6 +80,7 @@ def viewCategoryImage(request,mid,cid):
 
 def editor(request,mid,cid):
 	global data	
+	message=""
 	strData = ", ".join(data)
 	ph = []
 	name=Mobile.objects.get(id=mid)
@@ -96,9 +97,9 @@ def editor(request,mid,cid):
 		cmt = request.POST.get('comment')
 		res=Comments.objects.create(mobile=name,category=cate,name=n,comment=cmt, compList = complist)
 		if res:
-			messages.info(request, 'Thank You for the comment')
+			message='Thank You for the comment'
 		else:
-			messages.info(request, 'No Comment posted')
+			message='No Comment posted'
 	form = CommentForm()
 	cmmt = Comments.objects.filter(category_id=cid,mobile_id=mid)
 
@@ -122,7 +123,8 @@ def editor(request,mid,cid):
 		'form':form,
 		"com_list": strData,	
 		'cmmt':cmmt,
-		"PH_ID_MID_CID":PH_ID_MID_CID
+		"PH_ID_MID_CID":PH_ID_MID_CID,
+		"message":message
 		# 'cp':cp
     }
 	

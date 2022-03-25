@@ -4,8 +4,10 @@
 {% comment %}
 {% load crispy_forms_tags %}
 {% endcomment %}
-
 {% block content%}
+{% if message %}
+{{ message }}
+{% endif %}
 
 <div class="com_parent">
     <div class="div21">
@@ -154,7 +156,9 @@
     </div>
 </div>
 
-{{ PH_ID_MID_CID|getComments|safe }}
+{% for i in PH_ID_MID_CID|getComments%}
+{{ i|safe }}
+{% endfor %}
 
 <div id="myModal" class="modal">
   <div class="model-container">

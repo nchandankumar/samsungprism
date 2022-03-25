@@ -11,11 +11,14 @@ def getComments(value):
     PDIDs = ", ".join(PDIDs)
     print(PDIDs)
 
+    comments = []
     try:
-        cmmt1 = Comments.objects.filter(mobile_id=MCID[0],category_id=MCID[1],compList__icontains = PDIDs).distinct()
+        cmmt1 = Comments.objects.filter(mobile_id=MCID[0],category_id=MCID[1],compList__iexact = PDIDs).distinct()
         for i in cmmt1:
-            return (i.comment)
+            comments.append(i.comment)
     except Exception as e:
         print(e)
-
-    return "No Comments" 
+    # print(comments)
+    for i in comments:
+        print(i)
+    return comments
