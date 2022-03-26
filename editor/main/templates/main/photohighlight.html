@@ -36,47 +36,58 @@
       <button id="clear" >Clear</button>
     </div>
     <br />
-    {% for ph in photo %}
-    {{ph.image.url}}
-    <input id="upload" type="file" accept="image/*" value="{{ph.image.url}}"/>
-    {% endfor %}
+    <!-- {% for ph in photo %} -->
+    
+    <!-- <img id="upload" src="{{ph.image.url}}"/> -->
+    <!-- <input id="upload" type="file" accept="image/*" value="{{ph.image.url}}"/>  -->
+    <!-- {% endfor %} -->
     <p>
       Start drawing on the blank canvas, or upload an image and use the brush to
       draw on it
     </p>
     <script >
-        const fileInput = document.querySelector("#upload");
+        // const fileInput = document.querySelector("#upload");
+        // const fileInput = "/media/LOW_LIGHT_lbSgoR5.jfif"
 
 // enabling drawing on the blank canvas
 drawOnImage();
-
-fileInput.addEventListener("change", async (e) => {
-    const [file] = fileInput.files;
-
-    // displaying the uploaded image
-    const image = document.createElement("img");
-    image.src = await fileToDataUri(file);
-
-    // enabling the brush after after the image
-    // has been uploaded
+const image = document.createElement("img");
+    // image.src = await fileToDataUri(file);
+    {% for ph in photo %}
+    image.src =  "{{ph.image.url}}";
+    console.log(`{{ph.image.url}}`)
+    {% endfor %}
     image.addEventListener("load", () => {
         drawOnImage(image);
     });
 
-    return false;
-});
+// fileInput.addEventListener("change", async (e) => {
+//     const [file] = fileInput.files;
 
-function fileToDataUri(field) {
-    return new Promise((resolve) => {
-        const reader = new FileReader();
+//     // displaying the uploaded image
+//     const image = document.createElement("img");
+//     // image.src = await fileToDataUri(file);
+//     image.src =  "/media/LOW_LIGHT_lbSgoR5.jfif";
+//     console.log(image)
+//     // enabling the brush after after the image
+//     // has been uploaded
+//     image.addEventListener("load", () => {
+//         drawOnImage(image);
+//     });
+//     return false;
+// });
 
-        reader.addEventListener("load", () => {
-            resolve(reader.result);
-        });
+// function fileToDataUri(field) {
+//     return new Promise((resolve) => {
+//         const reader = new FileReader();
 
-        reader.readAsDataURL(field);
-    });
-}
+//         reader.addEventListener("load", () => {
+//             resolve(reader.result);
+//         });
+
+//         reader.readAsDataURL(field);
+//     });
+// }
 
 const sizeElement = document.querySelector("#sizeRange");
 let size = sizeElement.value;

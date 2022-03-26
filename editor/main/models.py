@@ -33,7 +33,7 @@ class Photocrop(models.Model):
         Photo, on_delete=models.SET_NULL, null=True, blank=True) 
     cimage = models.ImageField(null=False, blank=False) 
     def __str__(self): 
-        return self.cimage
+        return str(self.id)
 
 class Comments(models.Model):
     mobile = models.ForeignKey( 
