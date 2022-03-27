@@ -8,8 +8,9 @@ def getComments(value):
     print(value)
     MCID = value[0:2]
     PDIDs = value[2:]
+    # print(PDIDs,end="**")
     PDIDs = ", ".join(PDIDs)
-    print(PDIDs)
+    print(PDIDs,"pdisssssssssssssssssssssss")
 
     comments = []
     try:

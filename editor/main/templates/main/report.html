@@ -120,17 +120,19 @@
           </tr>
 
 
-          {% for i in cats%}
-          <tr>
-              <td>{{i.name}}</td>
-              <td>
-              {% for j in cmmt%}
-              {{j}}
-              {% endfor%}
-          </td>
-           
-        </tr>
-          {% endfor%}
+          {% for i,j,k,l in cc%}
+	          <tr>
+	            <td>{{i}}</td>
+	            <td>
+	                {% for c in j %}
+					
+	                <h5>{{c.name}}</h5>
+	                {{c.comment|safe}}
+	                <br>
+	                {% endfor %}
+	              </td>
+	          </tr>
+	          {% endfor%}	
           
       </table>
   </div>
