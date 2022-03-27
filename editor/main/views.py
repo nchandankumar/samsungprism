@@ -80,7 +80,7 @@ def viewCategoryImage(request,mid,cid):
 
 def editor(request,mid,cid):
 	global data	
-	message=""
+	message=""	
 	strData = ", ".join(data)
 	ph = []
 	name=Mobile.objects.get(id=mid)
@@ -328,14 +328,23 @@ def photoHighlight(request,mid,cid):
 def report(request,mid):
 	data= Photo.objects.filter(mobile_id=mid)
 	cats = Category.objects.filter(mobile_id =mid)
+
+	print("Catergory =", cats)
+	cmmt=[]
+	for i in cats:
+		print(i)
+		c=Comments.objects.filter(mobile_id=mid,category_id=i.id)
+		cmmt.append(c)
+	print("Comments =", cmmt[0][0].comment)
+	cmmt = ["Hi", "Hello"]
 	l=[]
 	for i in data:
 		l.append(i.cname)
-	print(l)
 	context ={
 		'cname':set(l),
 		'data':data,
-		'cats': cats
+		'cats': cats,
+		'cmmt':cmmt
 	}
 	return render(request,'main/report.html',context)
 
@@ -356,3 +365,66 @@ def report(request,mid):
 # user.is_staff = True
 # user.is_superuser = True
 # user.save()
+
+# def report(request,mid):
+#   data= Photo.objects.filter(mobile_id=mid)
+#   cats = Category.objects.filter(mobile_id =mid)
+#   # comm=Comments.objects.filter(mobile_id=mid)
+#   l,allcomm,comm,cids,catids,comlist	=[],[],[],[],[],[]
+#   for i in cats:
+#     c=Comments.objects.filter(mobile_id=mid,category_id=i.id)
+#     allcomm.append(c)
+#   for i in allcomm:
+#     b,cd,cl=[],[],[]
+#     for j in i:
+#       b.append(j)
+#       cd.append(j.category)
+#       x=j.compList
+#       x=list(map(int,x.split(", ")))
+#       print(x,end="-----")
+#       # print(j.compList,end="**")
+#       cl.append(x)
+#     comm.append(b)
+#     cids.append(cd)
+#     comlist.append(cl)
+  
+#   for i in cids:
+#     for j in i:
+#       catids.append(j.id)
+
+#   # print(*comm)
+#   temp=zip(comm,comlist)
+#   for i,j in temp:
+#     print(*i)
+#     print(*j)
+  
+#   catcom=zip(cats,comm,catids,comlist)  
+#   for i in data:
+#     l.append(i.cname)
+#   print(l)
+#   context ={
+#     'cname':set(l),
+#     'data':data,
+#     'cats': cats,
+#     'comm':comm,
+#     'cc':catcom,
+#     'mid':mid,
+#     'comlist':comlist,
+#     'catids':catids
+#     # 'cids':cids
+#   }
+#   return render(request,'main/report.html',context)
+
+	# {% for i,j,k,l in cc%}
+	#           <tr>
+	#             <td>{{i}}</td>
+	#             <td>
+	#                 {% for c in j %}
+					
+	#                 <h5>{{c.name}}</h5>
+	#                 {{c.comment|safe}}
+	#                 <br>
+	#                 {% endfor %}
+	#               </td>
+	#           </tr>
+	#           {% endfor%}	

@@ -118,20 +118,20 @@
             <th width="25%">Specifications</th>
             <th>Comments</th>
           </tr>
+
+
           {% for i in cats%}
           <tr>
-            <td>{{i}}</td>
-            <td>
-                Shade+ Building
-                <br>
-                Bright Light
-                <br>
-                Back Light
-                <br>
-                With Person
-              </td>
-          </tr>
+              <td>{{i.name}}</td>
+              <td>
+              {% for j in cmmt%}
+              {{j}}
+              {% endfor%}
+          </td>
+           
+        </tr>
           {% endfor%}
+          
       </table>
   </div>
 

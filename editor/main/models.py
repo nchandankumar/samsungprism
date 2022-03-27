@@ -43,7 +43,6 @@ class Comments(models.Model):
     compList = models.CharField(max_length=100, null=False, blank=False,default="No Comments")
     name = models.CharField(max_length=100, null=False, blank=False)
     comment = RichTextField(blank=True,null=True)
-    
     def __str__(self):
         return self.name
 

@@ -35,10 +35,17 @@
     <div style="margin-top:5px">
       <button id="clear" >Clear</button>
     </div>
+    <div style="margin-top:5px" hidden>
+      <button id="save" >Save</button>
+    </div>
+    <a id="download" download="myImage.jpg" href="" onclick="download_img(this);">
+        <button>Save</button>
+    </a>
+
     <br />
     <!-- {% for ph in photo %} -->
     
-    <!-- <img id="upload" src="{{ph.image.url}}"/> -->
+    <!-- <img id="upload" src="{{ph.imclage.url}}"/> -->
     <!-- <input id="upload" type="file" accept="image/*" value="{{ph.image.url}}"/>  -->
     <!-- {% endfor %} -->
     <p>
@@ -55,7 +62,16 @@ const image = document.createElement("img");
     // image.src = await fileToDataUri(file);
     {% for ph in photo %}
     image.src =  "{{ph.image.url}}";
+
     console.log(`{{ph.image.url}}`)
+    var canvas = document.getElementById("canvas");
+
+
+    download_img = function(el) {
+    var image = canvas.toDataURL("image/jpg");
+  el.href = image;
+};
+
     {% endfor %}
     image.addEventListener("load", () => {
         drawOnImage(image);
@@ -126,8 +142,9 @@ function drawOnImage(image = null) {
 
     const clearElement = document.getElementById("clear");
     clearElement.onclick = () => {
-        context.clearRect(0, 0, canvasElement.width, canvasElement.height);
+        drawOnImage(image);
     };
+
 
     let isDrawing;
 

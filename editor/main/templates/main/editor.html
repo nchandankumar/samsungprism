@@ -9,8 +9,8 @@
 {{ message }}
 {% endif %}
 
-<div class="com_parent">
-    <div class="div21">
+<div class="com_parent" >
+    <div class="div21" style="width: 300px;">
         {% for ph in samsung %}
         <div class="selected-competitor">
             <div class="selected-competitor-first-half">
@@ -34,8 +34,8 @@
     {% endfor %}
     {% endcomment %}
 
-    <!-- <div class="div-scroll-horizontal"> -->
-        <div class="div22">    
+    <div class="div-scroll-horizontal" style="width:900px; display: inline-flex; overflow: scroll; scroll-direction: horizontal;">
+        <div class="div22" >    
             {% for ph in photo %}
             <div class="selected-competitor">
                 <div class="selected-competitor-first-half">
@@ -43,7 +43,7 @@
                         <h5>{{ph.cname}}</h5>
                     </div>
                 </div>
-                <div class="selected-competitor-second-half" style="overflow: scroll;">
+                <div class="selected-competitor-second-half" style=" width:300px;overflow: scroll; scroll-direction: horizontal;">
                     <div class="selected-competitor-img" >
                         <img id="image{{ forloop.counter }}" src="{{ph.image.url}}" class="each-selected-competitor-img" alt="">
                     </div>
@@ -51,7 +51,7 @@
             </div>
             {% endfor %}
         </div>
-    <!-- </div> -->
+    </div>
     
     <!-- <div class="div23">
         {% for photo in photo2 %}
@@ -69,9 +69,9 @@
         </div>
         {% endfor %}
     </div> -->
-    <div class="div23">
-        <div class="editor-second-container">
-            <div class="editor-framework">
+    <div class="div23" >
+        <div class="editor-second-container" style="width: 300px;">
+            <div class="editor-framework" >
                 <!-- <div class="highlighter">
                     <div id="highlighter">
                         <i class="fa-solid fa-pen-clip"></i> highlighter
@@ -91,7 +91,7 @@
                 </div> -->
                 <form action="{% url 'main:photohighlight' mid cid %}" method="post">
                     {% csrf_token %} 
-                    <select class="form-select " id='selected  image' name ='selectedimage'>
+                    <select style="height: 40px; width: 100%;" class="form-select" id='selectedimage' name ='selectedimage'>
                         <option value="-1" default>Select image to highlight</option>
                         {% for ph in samsung %}
                         <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
@@ -99,13 +99,16 @@
                         {% for ph in photo %}
                         <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
                         {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Highlight
-                    </button>
+                    </select><br>
+                    <center>
+                        <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i style="font-size: 40px;" class="fas fa-crop"></i> <br>highlight        
+                        </button>
+                    </center>
+                    <br>
                 </form>
                 <form action="{% url 'main:photocrop' mid cid %}" method="post">
                     {% csrf_token %} 
-                    <select class="form-select " id='selectedimage' name ='selectedimage'>
+                    <select style="height: 40px; width: 100%;" class="form-select " id='selectedimage' name ='selectedimage'>
                         <option value="-1" default>Select image to crop</option>
                         {% for ph in samsung %}
                         <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
@@ -113,18 +116,20 @@
                         {% for ph in photo %}
                         <option value="{{ph.id}}">{{ph.cname}}{{ph.id}}</option>
                         {% endfor %}
-                    </select>
-                    <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i class="fas fa-crop"></i> Crop
-                    </button>
+                    </select><br><br>
+                    <center>
+                        <button type="submit" class="btn btn-outline-secondary mx-3 my-4"><i style="font-size: 40px;" class="fas fa-crop"></i><br>Crop
+                        </button>
+                    </center>
                 </form>
-                <div class="crop-selected-image-func">
+                <!-- <div class="crop-selected-image-func">
                     <div id="crop-image">
                         <i class="fa-solid fa-crop-simple"></i>
                     </div>
                     <div class="crop-img-text">
                         Crop Image
                     </div>
-                </div>
+                </div> -->
                 <!-- <div class="ratio-info-func">
                     1 : 1
                 </div> -->
